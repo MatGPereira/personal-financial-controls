@@ -40,7 +40,10 @@ async function deleteExpense(expenseId: number, prevState: any) {
 
   return {
     errors: {},
-    deletedExpense,
+    deletedExpense: {
+      ...deleteExpense,
+      amount: deletedExpense.amount.toNumber(),
+    },
   };
 }
 

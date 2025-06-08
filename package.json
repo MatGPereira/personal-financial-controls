@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@prisma/client": "^6.9.0",
+    "bcrypt": "^6.0.0",
     "clsx": "^2.1.1",
     "decimal.js": "^10.5.0",
+    "jose": "^6.0.11",
     "lucide-react": "^0.513.0",
     "next": "15.3.3",
     "react": "^19.0.0",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "22.15.30",
     "@types/react": "^19",
     "@types/react-dom": "^19",
