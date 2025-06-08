@@ -1,8 +1,9 @@
 'use client';
 
-import { Trash2 } from "lucide-react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
+import { LoaderCircle, Trash2 } from "lucide-react";
 import { deleteExpense } from "../planejamento/_actions/delete-expense";
-import { useActionState } from "react";
 
 type ListPlanningProps = {
   expense: any;
@@ -12,11 +13,22 @@ export default function ListPlanning({ expense }: ListPlanningProps) {
   const deleteExpenseWithId = deleteExpense.bind(null, expense.id)
 
   const [state, formAction, pending] = useActionState(
-      deleteExpenseWithId,
-      { errors: {} }
-    );
+    deleteExpenseWithId,
+    {
+      errors: {},
+      deletedExpense: {},
+    }
+  );
 
-  console.log(state);
+  useEffect(() => {
+    if(Object.entries(state.errors).length > 0) {
+      toast.error('Ops! Entre em contato com (16) 99366-8935 para solucionar o problema!');
+      return;
+    }
+
+    if(Object.entries(state.deletedExpense).length > 0)
+      toast.success('Despesa adicionada com sucesso!');
+  }, [state]);
 
   return (
     <div className="inline-flex items-center justify-between w-full">
@@ -26,15 +38,23 @@ export default function ListPlanning({ expense }: ListPlanningProps) {
         <form action={formAction}>
           <button
             className={`text-red-500 hover:text-red-700 p-1 transition-colors
-              disabled:bg-zinc-400 disabled:cursor-not-allowed
+              disabled:bg-zinc-400/75 disabled:cursor-not-allowed rounded-lg
+              bg-red-500/10 hover:bg-red-700/10 cursor-pointer
             `}
             type="submit"
             disabled={pending}
           >
-            <Trash2
-              size={16}
-              aria-hidden={true}
-            />
+            {pending
+              ? <LoaderCircle
+                  size={16}
+                  aria-hidden={true}
+                  className="animate-spin"
+                />
+              : <Trash2
+                  size={16}
+                  aria-hidden={true}
+                />
+            }
           </button>
         </form>
       </dd>

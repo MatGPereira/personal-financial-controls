@@ -2,9 +2,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-
 import z from 'zod';
-
 import { prisma } from '@/db';
 
 const baseExpenseSchema = z.object({
@@ -22,16 +20,17 @@ function validateBaseExpenseSchema(formData: FormData) {
   return validatedBaseExpenseSchema.error;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 async function createExpense(categoryId: number, prevState: any, formData: FormData) {
   const validatedFixedExpense = validateBaseExpenseSchema(formData);
   if(validatedFixedExpense) {
     return {
       errors: validatedFixedExpense.flatten().fieldErrors,
+      createdExpense: {},
     }
   }
 
-  await prisma.expenses.create({
+  const createdExpense = await prisma.expenses.create({
     data: {
       name: formData.get('name')!.toString(),
       categoryId: categoryId,
@@ -42,7 +41,13 @@ async function createExpense(categoryId: number, prevState: any, formData: FormD
 
   revalidatePath('/planejamento')
 
-  return { errors: {} };
+  return {
+    errors: {},
+    createdExpense: {
+      ...createdExpense,
+      amount: createdExpense.amount.toNumber(),
+    },
+  };
 }
 
 export {

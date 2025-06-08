@@ -20,16 +20,17 @@ function validateBaseExpenseSchema(expenseId: number) {
   return validatedBaseExpenseSchema.error;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+
 async function deleteExpense(expenseId: number, prevState: any) {
   const validatedDeleteFixedExpense = validateBaseExpenseSchema(expenseId);
   if(validatedDeleteFixedExpense) {
     return {
       errors: validatedDeleteFixedExpense.flatten().fieldErrors,
+      deletedExpense: {},
     }
   }
 
-  await prisma.expenses.delete({
+  const deletedExpense = await prisma.expenses.delete({
     where: {
       id: expenseId,
     }
@@ -37,7 +38,10 @@ async function deleteExpense(expenseId: number, prevState: any) {
 
   revalidatePath('/planejamento')
 
-  return { errors: {} };
+  return {
+    errors: {},
+    deletedExpense,
+  };
 }
 
 export {

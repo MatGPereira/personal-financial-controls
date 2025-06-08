@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 
 import { Moon } from 'lucide-react';
+import { Toaster } from 'sonner';
+
 import NavLinks from './_components/NavLinks';
 
 const roboto = Roboto({
@@ -47,6 +49,7 @@ export default function RootLayout({
         <main className="p-4 bg-zinc-100 flex-1">
           {children}
         </main>
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

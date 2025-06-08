@@ -1,10 +1,12 @@
+import type { ExpensesSummary } from "./_actions/expenses-summary";
 import { fetchCategories } from "./_actions/fetch-categories";
 import Article from "../_components/Article";
 import FooterPlanning from "../_components/FooterPlanning";
 import ListPlanning from "../_components/ListPlanning";
+import { expensesSummary } from "./_actions/expenses-summary";
 
 export default async function Page() {
-  const categories = await fetchCategories();
+  const [categories, summary] = await Promise.all([fetchCategories(), expensesSummary()]);
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -12,43 +14,27 @@ export default async function Page() {
         <Article>
           <div>
             <h2 className="text-sm font-medium text-zinc-600">
-              Despesas Fixas
-            </h2>
-            <span className="text-xl font-bold text-zinc-800">
-              R$ 1,479.90
-            </span>
-          </div>
-        </Article>
-        <Article>
-          <div>
-            <h2 className="text-sm font-medium text-zinc-600">
-              Despesas Vatiáveis
-            </h2>
-            <span className="text-xl font-bold text-zinc-800">
-              R$ 1,100.00
-            </span>
-          </div>
-        </Article>
-        <Article>
-          <div>
-            <h2 className="text-sm font-medium text-zinc-600">
-              Despesas Essesnciais
-            </h2>
-            <span className="text-xl font-bold text-zinc-800">
-              R$ 430,00
-            </span>
-          </div>
-        </Article>
-        <Article>
-          <div>
-            <h2 className="text-sm font-medium text-zinc-600">
               Total Planejado
             </h2>
             <span className="text-xl font-bold text-zinc-800">
-              R$ 3,009.90
+              R$ {summary.total?.toNumber().toFixed(2)}
             </span>
           </div>
         </Article>
+        {Object.entries(summary.categories).length > 0
+          && summary.categories.map(resume => (
+            <Article key={resume.categoryId}>
+              <div>
+                <h2 className="text-sm font-medium text-zinc-600">
+                  {resume.name}
+                </h2>
+                <span className="text-xl font-bold text-zinc-800">
+                  R$ {resume.amount.toNumber().toFixed(2)}
+                </span>
+              </div>
+            </Article>
+          ))
+        }
       </section>
       <section className="flex flex-col gap-y-2">
         {categories.length > 0
