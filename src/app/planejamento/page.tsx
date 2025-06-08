@@ -1,7 +1,11 @@
-import { Plus, Trash2 } from "lucide-react";
+import { fetchCategories } from "./_actions/fetch-categories";
 import Article from "../_components/Article";
+import FooterPlanning from "../_components/FooterPlanning";
+import ListPlanning from "../_components/ListPlanning";
 
-export default function Page() {
+export default async function Page() {
+  const categories = await fetchCategories();
+
   return (
     <div className="flex flex-col gap-y-4">
       <section className="flex flex-col gap-y-2">
@@ -47,249 +51,44 @@ export default function Page() {
         </Article>
       </section>
       <section className="flex flex-col gap-y-2">
-        <Article>
-          <div className="w-full">
-            <header className="w-full mb-4">
-              <h2 className="font-bold">Despesas Fixas</h2>
-            </header>
-            <dl className="flex flex-col gap-y-2">
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Aluguel</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 1,200.00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
+        {categories.length > 0
+          && categories.map(category => (
+            <Article key={category.id}>
+              <div className="w-full">
+                <header className="w-full mb-4">
+                  <h2 className="font-bold">{category.name}</h2>
+                </header>
+                <dl className="flex flex-col gap-y-2">
+                  {category.Expenses.length > 0
+                    ? category.Expenses.map(expense => {
+                      const convertedExpense = {
+                        ...expense,
+                        amount: expense.amount.toNumber()
+                      };
+                      return (
+                        <ListPlanning
+                          key={expense.id}
+                          expense={convertedExpense}
+                        />
+                      )
+                    })
+                    : (
+                      <>
+                        <p className="text-zinc-400">
+                          Não há nenhuma {category.name.toLocaleLowerCase()} no momento
+                        </p>
+                        <p className="text-blue-400">
+                          Adicione as suas primeiras {category.name.toLocaleLowerCase()}
+                        </p>
+                      </>
+                    )
+                  }
+                </dl>
+                <FooterPlanning categoryId={category.id} />
               </div>
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Internet</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 99,90
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Energia Elétrica</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 180,00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-            </dl>
-            <footer className={`border-t border-t-zinc-200 mt-4 pt-4
-              flex items-center gap-x-2
-            `}>
-              <div className="flex items-center gap-x-2 flex-1">
-                <input
-                  type="text"
-                  placeholder="Despesa"
-                  className={`w-24 px-3 py-2 border rounded-lg focus:outline-none
-                    focus:ring-2 transition-colors bg-white border-zinc-300
-                    text-zinc-800 placeholder-zinc-500 focus:ring-zinc-400
-                    flex-1 placeholder:text-sm
-                  `}
-                />
-                <input
-                  type="text"
-                  placeholder="Valor"
-                  className={`w-24 px-3 py-2 border rounded-lg focus:outline-none
-                    focus:ring-2 transition-colors bg-white border-zinc-300
-                    text-zinc-800 placeholder-zinc-500 focus:ring-zinc-400
-                    flex-1 placeholder:text-sm
-                  `}
-                />
-              </div>
-              <button
-                className={`px-4 py-2 rounded-lg inline-flex items-center
-                  transitions-color bg-zinc-800 text-zinc-50 hover:bg-zinc-700
-                `}
-                type="button"
-              >
-                <Plus />
-              </button>
-            </footer>
-          </div>
-        </Article>
-        <Article>
-          <div className="w-full">
-            <header className="w-full mb-4">
-              <h2 className="font-bold">Despesas Variáveis</h2>
-            </header>
-            <dl className="flex flex-col gap-y-2">
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Alimentação</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 600,00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Transporte</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 300,00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Lazer</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 200,00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-            </dl>
-            <footer className={`border-t border-t-zinc-200 mt-4 pt-4
-              flex items-center gap-x-2
-            `}>
-              <div className="flex items-center gap-x-2 flex-1">
-                <input
-                  type="text"
-                  placeholder="Despesa"
-                  className={`w-24 px-3 py-2 border rounded-lg focus:outline-none
-                    focus:ring-2 transition-colors bg-white border-zinc-300
-                    text-zinc-800 placeholder-zinc-500 focus:ring-zinc-400
-                    flex-1 placeholder:text-sm
-                  `}
-                />
-                <input
-                  type="text"
-                  placeholder="Valor"
-                  className={`w-24 px-3 py-2 border rounded-lg focus:outline-none
-                    focus:ring-2 transition-colors bg-white border-zinc-300
-                    text-zinc-800 placeholder-zinc-500 focus:ring-zinc-400
-                    flex-1 placeholder:text-sm
-                  `}
-                />
-              </div>
-              <button
-                className={`px-4 py-2 rounded-lg inline-flex items-center
-                  transitions-color bg-zinc-800 text-zinc-50 hover:bg-zinc-700
-                `}
-                type="button"
-              >
-                <Plus />
-              </button>
-            </footer>
-          </div>
-        </Article>
-        <Article>
-          <div className="w-full">
-            <header className="w-full mb-4">
-              <h2 className="font-bold">Despesas Essenciais</h2>
-            </header>
-            <dl className="flex flex-col gap-y-2">
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Medicamentos</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 150,00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-              <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-700">Seguro Saúde</dt>
-                <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
-                  R$ 280,00
-                  <button
-                    className="text-red-500 hover:text-red-700 p-1 transition-colors"
-                    type="button"
-                  >
-                    <Trash2
-                      size={16}
-                      aria-hidden={true}
-                    />
-                  </button>
-                </dd>
-              </div>
-            </dl>
-            <footer className={`border-t border-t-zinc-200 mt-4 pt-4
-              flex items-center gap-x-2
-            `}>
-              <div className="flex items-center gap-x-2 flex-1">
-                <input
-                  type="text"
-                  placeholder="Despesa"
-                  className={`w-24 px-3 py-2 border rounded-lg focus:outline-none
-                    focus:ring-2 transition-colors bg-white border-zinc-300
-                    text-zinc-800 placeholder-zinc-500 focus:ring-zinc-400
-                    flex-1 placeholder:text-sm
-                  `}
-                />
-                <input
-                  type="text"
-                  placeholder="Valor"
-                  className={`w-24 px-3 py-2 border rounded-lg focus:outline-none
-                    focus:ring-2 transition-colors bg-white border-zinc-300
-                    text-zinc-800 placeholder-zinc-500 focus:ring-zinc-400
-                    flex-1 placeholder:text-sm
-                  `}
-                />
-              </div>
-              <button
-                className={`px-4 py-2 rounded-lg inline-flex items-center
-                  transitions-color bg-zinc-800 text-zinc-50 hover:bg-zinc-700
-                `}
-                type="button"
-              >
-                <Plus />
-              </button>
-            </footer>
-          </div>
-        </Article>
+            </Article>
+          ))
+        }
       </section>
     </div>
   );
