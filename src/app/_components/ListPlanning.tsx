@@ -5,7 +5,6 @@ import { deleteExpense } from "../planejamento/_actions/delete-expense";
 import { useActionState } from "react";
 
 type ListPlanningProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expense: any;
 };
 
