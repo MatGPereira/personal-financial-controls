@@ -53,24 +53,42 @@ export default function Page() {
         <Article>
           <div className="w-full">
             <header className="w-full mb-4">
-              <h2 className="font-bold">Gastos por Categoria</h2>
+              <h2 className="font-bold text-zinc-800 dark:text-gray-100">
+                Gastos por Categoria
+              </h2>
             </header>
             <dl className="flex flex-col gap-y-2">
               <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-500">Alimentação</dt>
-                <dd className="text-zinc-800">R$ 156,60</dd>
+                <dt className="text-zinc-600 dark:text-gray-300">
+                  Alimentação
+                </dt>
+                <dd className="text-zinc-800 dark:text-gray-100">
+                  R$ 156,60
+                </dd>
               </div>
               <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-500">Transporte</dt>
-                <dd className="text-zinc-800">R$ 89,90</dd>
+                <dt className="text-zinc-600 dark:text-gray-300">
+                  Transporte
+                </dt>
+                <dd className="text-zinc-800 dark:text-gray-100">
+                  R$ 89,90
+                </dd>
               </div>
               <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-500">Entretenimento</dt>
-                <dd className="text-zinc-800">R$ 29.90</dd>
+                <dt className="text-zinc-600 dark:text-gray-300">
+                  Entretenimento
+                </dt>
+                <dd className="text-zinc-800 dark:text-gray-100">
+                  R$ 29.90
+                </dd>
               </div>
               <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-500">Saúde</dt>
-                <dd className="text-zinc-800">R$ 45.60</dd>
+                <dt className="text-zinc-600 dark:text-gray-300">
+                  Saúde
+                </dt>
+                <dd className="text-zinc-800 dark:text-gray-100">
+                  R$ 45.60
+                </dd>
               </div>
             </dl>
           </div>
@@ -78,21 +96,31 @@ export default function Page() {
         <Article>
           <div className="w-full">
             <header className="w-full mb-4">
-              <h2 className="font-bold">Planejado vs Realizado</h2>
+              <h2 className="font-bold text-zinc-800 dark:text-gray-100">
+                Planejado vs Realizado
+              </h2>
             </header>
             <dl className="flex flex-col gap-y-2">
               <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-500">Total Receitas</dt>
+                <dt className="text-zinc-600 dark:text-gray-300">
+                  Total Receitas
+                </dt>
                 <dd className="text-green-600 font-bold">R$ 4,500.00</dd>
               </div>
               <div className="inline-flex items-center justify-between w-full">
-                <dt className="text-zinc-500">Total Planejado</dt>
-                <dd className="text-zinc-800">R$ 3,009.90</dd>
+                <dt className="text-zinc-600 dark:text-gray-300">
+                  Total Planejado
+                </dt>
+                <dd className="text-zinc-800 dark:text-gray-100">
+                  R$ 3,009.90
+                </dd>
               </div>
             </dl>
             <footer className="w-full border-t border-t-zinc-200 mt-2 pt-2">
               <dl className="flex items-center justify-between">
-                <dt className="font-bold">Diferença</dt>
+                <dt className="text-zinc-600 dark:text-gray-300 font-bold">
+                  Diferença
+                </dt>
                 <dd className="text-green-600 font-bold">R$ 1,490.10</dd>
               </dl>
             </footer>

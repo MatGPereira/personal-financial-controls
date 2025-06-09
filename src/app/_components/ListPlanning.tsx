@@ -32,8 +32,10 @@ export default function ListPlanning({ expense }: ListPlanningProps) {
 
   return (
     <div className="inline-flex items-center justify-between w-full">
-      <dt className="text-zinc-700">{expense.name}</dt>
-      <dd className="font-medium text-zinc-800 inline-flex items-center gap-x-1">
+      <dt className="text-zinc-700 dark:text-gray-300">
+        {expense.name}
+      </dt>
+      <dd className="font-medium text-zinc-800 dark:text-gray-100 inline-flex items-center gap-x-1">
         R$ {expense.amount}
         <form action={formAction}>
           <button

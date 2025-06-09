@@ -9,7 +9,8 @@ import { Toaster } from 'sonner';
 import NavLinks from './_components/NavLinks';
 import { cookies } from 'next/headers';
 import { decrypt } from './login/_lib/sessions';
-import clsx from 'clsx';
+import { ThemeProvider } from '@/components/theme-provider';
+import ThemeToggle from '@/components/ui/theme-toggle';
 
 const roboto = Roboto({
   variable: "--font-roboto-sans",
@@ -34,34 +35,38 @@ export default async function RootLayout({
       <body
         className={`${roboto.variable} flex flex-col antialiased max-w-screen min-h-screen`}
       >
-        {isAuthenticated
-          ? (
-            <header className="flex flex-col">
-              <div className="flex items-center justify-between p-4">
-                <div>
-                  <h1 className="text-2xl font-bold mb-1 text-zinc-800">
-                    Controle Financeiro
-                  </h1>
-                  <p className="text-zinc-600">Sua vida financeira sob controle</p>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {isAuthenticated
+            ? (
+              <header className="flex flex-col dark:bg-gray-800">
+                <div className="flex items-center justify-between p-4">
+                  <div>
+                    <h1 className="text-2xl font-bold mb-1 text-zinc-800 dark:text-gray-100">
+                      Controle Financeiro
+                    </h1>
+                    <p className="text-zinc-600 dark:text-gray-400">
+                      Sua vida financeira sob controle
+                    </p>
+                  </div>
+                  <ThemeToggle />
                 </div>
-                <button
-                  className={`bg-zinc-100 p-2 rounded-lg cursor-pointer
-                    hover:bg-zinc-200 text-zinc-600
-                  `}
-                  type="button"
-                >
-                  <Moon aria-hidden={true} />
-                </button>
-              </div>
-              <NavLinks />
-            </header>
-          )
-          : null
-        }
-        <main className={`p-4 bg-zinc-100 flex-1 ${!isAuthenticated && 'grid place-items-center'}`}>
-          {children}
-        </main>
-        <Toaster richColors position="top-right" />
+                <NavLinks />
+              </header>
+            )
+            : null
+          }
+          <main className={`p-4 bg-zinc-100 flex-1 ${!isAuthenticated && 'grid place-items-center'}
+            dark:bg-gray-900
+          `}>
+            {children}
+          </main>
+          <Toaster richColors position="top-right" />
+        </ThemeProvider>
       </body>
     </html>
   );
