@@ -36,7 +36,14 @@ export default function ListPlanning({ expense }: ListPlanningProps) {
         {expense.name}
       </dt>
       <dd className="font-medium text-zinc-800 dark:text-gray-100 inline-flex items-center gap-x-1">
-        R$ {expense.amount}
+        {Intl
+          .NumberFormat('pt-BR',
+            {
+              currency: 'BRL',
+              style: 'currency'
+            }
+          )
+          .format(expense.amount)}
         <form action={formAction}>
           <button
             className={`text-red-500 hover:text-red-700 p-1 transition-colors

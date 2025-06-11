@@ -19,7 +19,14 @@ export default async function Page() {
               Total Planejado
             </h2>
             <span className="text-xl font-bold text-zinc-800 dark:text-gray-100">
-              R$ {summary.total?.toNumber().toFixed(2)}
+              {Intl
+                .NumberFormat('pt-BR',
+                  {
+                    currency: 'BRL',
+                    style: 'currency'
+                  }
+                )
+                .format(summary.total?.toNumber())}
             </span>
           </div>
         </Article>
@@ -31,7 +38,14 @@ export default async function Page() {
                   {resume.name}
                 </h2>
                 <span className="text-xl font-bold text-zinc-800 dark:text-gray-100">
-                  R$ {resume.amount.toNumber().toFixed(2)}
+                  {Intl
+                    .NumberFormat('pt-BR',
+                      {
+                        currency: 'BRL',
+                        style: 'currency'
+                      }
+                    )
+                    .format(resume.amount.toNumber())}
                 </span>
               </div>
             </Article>

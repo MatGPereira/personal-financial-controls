@@ -83,7 +83,7 @@ export default function Page() {
           type="submit"
           className={`px-4 py-2 rounded-lg inline-flex items-center
             transitions-color bg-zinc-800 text-zinc-50 hover:bg-zinc-700
-            disable:bg-zinc-700 disable:cursor-not-allowed justify-center
+            disable:bg-zinc-700 disable:cursor-not-allowed justify-center w-full
           `}
         >
           {pending
